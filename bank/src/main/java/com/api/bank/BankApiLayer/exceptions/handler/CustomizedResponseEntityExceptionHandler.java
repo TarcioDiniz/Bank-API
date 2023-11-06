@@ -1,7 +1,7 @@
-package com.api.bank.exceptions.handler;
+package com.api.bank.BankApiLayer.exceptions.handler;
 
-import com.api.bank.exceptions.BankException.GenericBADException;
-import com.api.bank.exceptions.ExceptionResponse;
+import com.api.bank.BankApiLayer.exceptions.BankException.GenericBADException;
+import com.api.bank.BankApiLayer.exceptions.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package com.api.bank.exceptions.BankException;
+package com.api.bank.BankApiLayer.exceptions.BankException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

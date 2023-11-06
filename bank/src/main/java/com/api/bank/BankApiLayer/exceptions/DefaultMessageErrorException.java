@@ -1,4 +1,4 @@
-package com.api.bank.exceptions;
+package com.api.bank.BankApiLayer.exceptions;
 
 public enum DefaultMessageErrorException {
 

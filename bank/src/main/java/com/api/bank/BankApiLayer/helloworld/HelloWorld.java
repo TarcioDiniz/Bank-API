@@ -1,6 +1,4 @@
-package com.api.bank.controllers.helloworld;
-
-import org.springframework.web.bind.annotation.RestController;
+package com.api.bank.BankApiLayer.helloworld;
 
 
 public class HelloWorld {
