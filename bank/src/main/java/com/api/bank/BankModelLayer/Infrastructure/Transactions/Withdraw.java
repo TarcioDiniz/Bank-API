@@ -7,10 +7,12 @@ import com.api.bank.BankModelLayer.Infrastructure.TransactionsData;
 
 import javax.xml.crypto.Data;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Withdraw implements Transactions {
+
     @Override
-    public void SetData(int ID, Account account, BigDecimal value, Data data, String description, TypeTransactions type) {
+    public void SetData(int AGENCY, int ACCOUNT_ID, BigDecimal value, Date data, String description, TypeTransactions type) {
 
     }
 

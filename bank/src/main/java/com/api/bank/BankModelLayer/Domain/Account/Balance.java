@@ -5,17 +5,17 @@ import java.math.BigDecimal;
 public class Balance {
 
     private int CPF;
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     public Balance(int newCPF, BigDecimal newValue) {
         this.CPF = newCPF;
         SetBalance(newValue);
     }
 
-    private void SetBalance(BigDecimal newValue) {
-        // TODO implements context
-        this.balance = newValue;
+    public void SetBalance(BigDecimal newValue) {
+        this.balance = this.balance.add(newValue);
     }
+
 
     public BigDecimal getBalance() {
         return balance;

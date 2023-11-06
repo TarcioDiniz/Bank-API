@@ -2,6 +2,7 @@ package com.api.bank.BankDataLayer.MockData;
 
 import com.api.bank.BankModelLayer.Application.Account;
 import com.api.bank.BankModelLayer.Application.TypeAccount;
+import com.api.bank.BankModelLayer.Domain.Account.Balance;
 import com.api.bank.BankModelLayer.Domain.Account.CurrentAccount;
 import com.api.bank.BankModelLayer.Domain.Account.SavingsAccount;
 import com.api.bank.BankModelLayer.Domain.Bank;
@@ -9,9 +10,11 @@ import com.api.bank.BankModelLayer.Domain.Login;
 import com.api.bank.BankModelLayer.Infrastructure.DataBaseClient;
 import com.api.bank.BankModelLayer.Infrastructure.Password;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class MockDataAccount {
 
@@ -26,25 +29,20 @@ public class MockDataAccount {
 
         // Simulando DataBaseClient 1
         Date dateOfBirth1 = new Date(); // Substitua com a data de nascimento desejada
-        var CPF1= 123456789;
+        var CPF1 = 123456789;
         DataBaseClient client1 = new DataBaseClient(1, "Clara", dateOfBirth1, CPF1, "cliente1@email.com", TypeAccount.CurrentAccount, encryptedPassword, generateBank(CPF1));
         clienteArray.add(client1);
-
-        // Simulando DataBaseClient 1
-        Date dateOfBirth2 = new Date(); // Substitua com a data de nascimento desejada
-        var CPF2= 222222222;
-        DataBaseClient client2 = new DataBaseClient(1, "tarcio", dateOfBirth1, CPF1, "cliente2@email.com", TypeAccount.SavingsAccount, encryptedPassword, generateBank(CPF2));
-        clienteArray.add(client2);
 
         return clienteArray;
     }
 
-    private static Bank generateBank(int CPF){
+    private static Bank generateBank(int CPF) {
         var bank = Bank.generateBankAccount(CPF).getValue();
         var agencia = bank[0];
         int conta = bank[1];
         return new Bank(CPF, agencia, conta);
     }
+
     public static DataBaseClient getDataCliente(Login login) {
 
         var banco = bancoDeDados();
@@ -80,6 +78,21 @@ public class MockDataAccount {
         }
         return null;
     }
+
+    public static void deposit(int AGENCY, int ACCOUNT_ID, BigDecimal value, Date data, String description) {
+        var banco = bancoDeDados();
+
+        var account = SingletonController.getInstance().getAccount();
+        var agencia = account.getMetaData().getBank().getAGENCY();
+        var conta = account.getMetaData().getBank().getACCOUNT_ID();
+        account.setBalance(value);
+        if (agencia == AGENCY && ACCOUNT_ID == conta) {
+            System.out.println("aquiiii");
+
+        }
+    }
+
+
 
 
 
