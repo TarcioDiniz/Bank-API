@@ -1,6 +1,7 @@
 package com.api.bank.BankModelLayer.Infrastructure;
 
 import com.api.bank.BankModelLayer.Application.TypeAccount;
+import com.api.bank.BankModelLayer.Domain.Bank;
 
 import java.util.Date;
 
@@ -12,8 +13,8 @@ public class DataBaseClient {
     private int CPF;
     private String Email;
     private TypeAccount typeAccount;
-
     private String password;
+    private Bank bank;
 
     public DataBaseClient(int ID,
                           String Name,
@@ -21,7 +22,8 @@ public class DataBaseClient {
                           int CPF,
                           String Email,
                           TypeAccount typeAccount,
-                          String password) {
+                          String password,
+                          Bank bank) {
         this.ID = ID;
         this.Name = Name;
         this.DateOfBirth = DateOfBirth;
@@ -29,6 +31,7 @@ public class DataBaseClient {
         this.Email = Email;
         this.typeAccount = typeAccount;
         this.password = password;
+        this.bank = bank;
     }
 
 
@@ -75,5 +78,12 @@ public class DataBaseClient {
 
     public int getID() {
         return ID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public Bank getBank(){
+        return bank;
     }
 }

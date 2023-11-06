@@ -1,22 +1,37 @@
 package com.api.bank.BankModelLayer.Domain;
 
+import java.util.AbstractMap;
+import java.util.Map;
+import java.util.Random;
+
 public class Bank {
-    private int ID;
+    private int CPF;
     private int AGENCY;
     private int ACCOUNT_ID;
 
-    public Bank(int ID, int AGENCY, int ACCOUNT_ID) {
-        this.ID = ID;
+    public Bank(int CPF, int AGENCY, int ACCOUNT_ID) {
+        this.CPF = CPF;
         this.AGENCY = AGENCY;
         this.ACCOUNT_ID = ACCOUNT_ID;
     }
 
-    public int getID() {
-        return ID;
+    // CPF: {Agencia, conta}
+    public static Map.Entry<Integer, Integer[]> generateBankAccount(int CPF){
+        Random random = new Random();
+        int agencia = random.nextInt(6001) + 2000; // Random number from 2000 to 8000
+        int conta = random.nextInt(6001) + 2000; // Random number from 2000 to 8000
+
+        Integer[] accountNumbers = {agencia, conta};
+
+        return new AbstractMap.SimpleEntry<>(CPF, accountNumbers);
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public int getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(int CPF) {
+        this.CPF = CPF;
     }
 
     public int getAGENCY() {

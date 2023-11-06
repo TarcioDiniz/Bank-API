@@ -26,4 +26,8 @@ public class Login {
     public int getCPF() {
         return CPF;
     }
+
+    public DataBaseClient getData(){
+        return MockDataAccount.getDataCliente(this);
+    }
 }

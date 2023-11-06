@@ -1,21 +1,18 @@
 package com.api.bank.BankModelLayer.Domain.Account;
 
 import com.api.bank.BankModelLayer.Application.Account;
-import com.api.bank.BankModelLayer.Domain.Bank;
+import com.api.bank.BankModelLayer.Application.Transactions;
 import com.api.bank.BankModelLayer.Domain.Login;
 import com.api.bank.BankModelLayer.Infrastructure.DataBaseClient;
 import com.api.bank.BankModelLayer.Infrastructure.Investment.Investment;
-import com.api.bank.BankModelLayer.Application.Transactions;
-import com.api.bank.BankModelLayer.Infrastructure.Password;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 public class CurrentAccount implements Account {
 
     private final Balance balance;
-    //private Login login;
+    private Login login;
 
     public CurrentAccount(Login login) {
 
@@ -25,6 +22,7 @@ public class CurrentAccount implements Account {
             // Balance nao pode inicar com Zero, faça uma busca no banco de dados primeiro
             this.balance = new Balance(login.getCPF(), BigDecimal.ZERO);
         }
+        this.login = login;
     }
 
     @Override
@@ -44,7 +42,7 @@ public class CurrentAccount implements Account {
 
     @Override
     public DataBaseClient getMetaData() {
-        return null;
+        return login.getData();
     }
 
     @Override

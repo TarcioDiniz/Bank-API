@@ -11,8 +11,10 @@ import java.util.List;
 
 public class SavingsAccount implements Account {
 
-    public SavingsAccount(Login login){
+    private Login login;
 
+    public SavingsAccount(Login login){
+    this.login = login;
     }
     @Override
     public List<Transactions> getTransactions() {
@@ -31,7 +33,7 @@ public class SavingsAccount implements Account {
 
     @Override
     public DataBaseClient getMetaData() {
-        return null;
+        return login.getData();
     }
 
     @Override
