@@ -5,6 +5,12 @@ public class Bank {
     private int AGENCY;
     private int ACCOUNT_ID;
 
+    public Bank(int ID, int AGENCY, int ACCOUNT_ID) {
+        this.ID = ID;
+        this.AGENCY = AGENCY;
+        this.ACCOUNT_ID = ACCOUNT_ID;
+    }
+
     public int getID() {
         return ID;
     }

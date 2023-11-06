@@ -7,5 +7,17 @@ public class Login {
     private int ID;
     private DataBaseClient dataBaseClient;
     private Bank bank;
-    private Password password;
+    private String password;
+
+    public Login(int ID, DataBaseClient dataBaseClient, Bank bank, String password) {
+        this.ID = ID;
+        this.dataBaseClient = dataBaseClient;
+        this.bank = bank;
+        this.password = password;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
 }

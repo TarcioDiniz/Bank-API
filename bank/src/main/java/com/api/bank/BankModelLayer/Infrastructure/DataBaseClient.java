@@ -1,13 +1,20 @@
 package com.api.bank.BankModelLayer.Infrastructure;
 
-import javax.xml.crypto.Data;
+import java.util.Date;
 
 public class DataBaseClient {
 
-    private String Name;
-    private Data DateOfBirth;
-    private int CPF;
-    private String Email;
+        private String Name;
+        private Date DateOfBirth;
+        private int CPF;
+        private String Email;
+
+    public DataBaseClient(String Name, Date DateOfBirth, int CPF, String Email) {
+        this.Name = Name;
+        this.DateOfBirth = DateOfBirth;
+        this.CPF = CPF;
+        this.Email = Email;
+    }
 
 
     public String getName() {
@@ -19,12 +26,12 @@ public class DataBaseClient {
         Name = name;
     }
 
-    public Data getDateOfBirth() {
+    public Date getDateOfBirth() {
         return DateOfBirth;
     }
 
 
-    public void setDateOfBirth(Data dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         DateOfBirth = dateOfBirth;
     }
 

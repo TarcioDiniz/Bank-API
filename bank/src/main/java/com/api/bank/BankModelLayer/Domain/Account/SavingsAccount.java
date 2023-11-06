@@ -29,6 +29,11 @@ public class SavingsAccount implements Account {
         return null;
     }
 
+    @Override
+    public Boolean hasTransaction() {
+        return null;
+    }
+
     private void SetInvestment(){
         // TODO implement context
     }

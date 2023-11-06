@@ -10,4 +10,5 @@ public interface Account {
     BigDecimal getBalance();
     Investment setInvestment();
     DataBaseClient getMetaData();
+    Boolean hasTransaction();
 }
