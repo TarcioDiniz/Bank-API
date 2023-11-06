@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 public class Balance {
 
-    private int ID;
+    private int CPF;
     private BigDecimal balance;
 
-    public Balance(int newID, BigDecimal newValue) {
-        this.ID = newID;
+    public Balance(int newCPF, BigDecimal newValue) {
+        this.CPF = newCPF;
         SetBalance(newValue);
     }
 

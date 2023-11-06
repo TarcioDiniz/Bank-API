@@ -1,23 +1,29 @@
 package com.api.bank.BankModelLayer.Domain;
 
+import com.api.bank.BankDataLayer.MockData.MockDataAccount;
+import com.api.bank.BankModelLayer.Application.Account;
 import com.api.bank.BankModelLayer.Infrastructure.DataBaseClient;
 import com.api.bank.BankModelLayer.Infrastructure.Password;
 
 public class Login {
-    private int ID;
-    private DataBaseClient dataBaseClient;
-    private Bank bank;
+    private int CPF;
     private String password;
 
-    public Login(int ID, DataBaseClient dataBaseClient, Bank bank, String password) {
-        this.ID = ID;
-        this.dataBaseClient = dataBaseClient;
-        this.bank = bank;
+    private Account account;
+
+    public Login(int CPF, String password) {
+        this.CPF = CPF;
         this.password = password;
+
+        this.account = MockDataAccount.getAccount(CPF, password, this);
+
     }
 
-    public int getID() {
-        return ID;
+    public Account getAccount() {
+        return account;
     }
 
+    public int getCPF() {
+        return CPF;
+    }
 }

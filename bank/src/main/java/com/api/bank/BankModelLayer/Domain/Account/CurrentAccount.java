@@ -15,33 +15,15 @@ import java.util.List;
 public class CurrentAccount implements Account {
 
     private final Balance balance;
-    private Login login;
+    //private Login login;
 
-    public CurrentAccount() {
-
-        // Simulando DataBaseClient
-
-        Date dateOfBirth = new Date(); // Substitua com a data de nascimento desejada
-        DataBaseClient client = new DataBaseClient("Clara", dateOfBirth, 123456789, "cliente@email.com");
-
-        // simulando Bank
-        Bank bank = new Bank(1, 1234, 56789);
-
-        // Simulando Senha
-        Password password = new Password();
-        String originalPassword = "SecretPassword123";
-        String encryptedPassword = password.encrypt(originalPassword);
-
-
-        // simulando o Login
-
-        login = new Login(111, client, bank, encryptedPassword);
+    public CurrentAccount(Login login) {
 
         if (!hasTransaction()) {
-            this.balance = new Balance(login.getID(), new BigDecimal("2000"));
+            this.balance = new Balance(login.getCPF(), new BigDecimal("2000"));
         } else {
             // Balance nao pode inicar com Zero, faça uma busca no banco de dados primeiro
-            this.balance = new Balance(login.getID(), BigDecimal.ZERO);
+            this.balance = new Balance(login.getCPF(), BigDecimal.ZERO);
         }
     }
 

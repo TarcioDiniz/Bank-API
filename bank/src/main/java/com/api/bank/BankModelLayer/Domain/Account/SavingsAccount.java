@@ -1,6 +1,7 @@
 package com.api.bank.BankModelLayer.Domain.Account;
 
 import com.api.bank.BankModelLayer.Application.Account;
+import com.api.bank.BankModelLayer.Domain.Login;
 import com.api.bank.BankModelLayer.Infrastructure.DataBaseClient;
 import com.api.bank.BankModelLayer.Infrastructure.Investment.Investment;
 import com.api.bank.BankModelLayer.Application.Transactions;
@@ -9,6 +10,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class SavingsAccount implements Account {
+
+    public SavingsAccount(Login login){
+
+    }
     @Override
     public List<Transactions> getTransactions() {
         return null;
