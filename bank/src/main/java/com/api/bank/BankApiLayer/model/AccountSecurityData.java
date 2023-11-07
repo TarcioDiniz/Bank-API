@@ -1,14 +1,11 @@
-package com.api.bank.BankDataLayer.DTO;
+package com.api.bank.BankApiLayer.model;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "account_security_data")
+@Table
 public class AccountSecurityData {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @Column(nullable = false, length = 11)
     private int cpf;
 
