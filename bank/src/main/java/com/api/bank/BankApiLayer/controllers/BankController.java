@@ -1,4 +1,4 @@
-package com.api.bank.BankApiLayer.controllers.BankData;
+package com.api.bank.BankApiLayer.controllers;
 
 import com.api.bank.BankApiLayer.model.BankData;
 import com.api.bank.BankApiLayer.services.BankService;
