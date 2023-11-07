@@ -35,12 +35,6 @@ public class SavingsAccount implements Account {
     }
 
     @Override
-    public void setBalance(BigDecimal value) {
-        balance.SetBalance(value);
-    }
-
-
-    @Override
     public Investment setInvestment() {
         return null;
     }
@@ -56,7 +50,7 @@ public class SavingsAccount implements Account {
     }
 
     @Override
-    public void deposit(int AGENCY, int ACCOUNT_ID, BigDecimal value, Date data, String description) {
+    public void deposit(BigDecimal value, Date data, String description) {
 
     }
 

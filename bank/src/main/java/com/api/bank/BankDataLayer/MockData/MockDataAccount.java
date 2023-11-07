@@ -79,17 +79,8 @@ public class MockDataAccount {
         return null;
     }
 
-    public static void deposit(int AGENCY, int ACCOUNT_ID, BigDecimal value, Date data, String description) {
-        var banco = bancoDeDados();
-
-        var account = SingletonController.getInstance().getAccount();
-        var agencia = account.getMetaData().getBank().getAGENCY();
-        var conta = account.getMetaData().getBank().getACCOUNT_ID();
-        account.setBalance(value);
-        if (agencia == AGENCY && ACCOUNT_ID == conta) {
-            System.out.println("aquiiii");
-
-        }
+    public static void deposit(Balance balance, BigDecimal value, Date data, String description) {
+        balance.SetBalance(value);
     }
 
 

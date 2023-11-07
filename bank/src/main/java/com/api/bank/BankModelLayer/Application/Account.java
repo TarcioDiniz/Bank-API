@@ -1,5 +1,6 @@
 package com.api.bank.BankModelLayer.Application;
 
+import com.api.bank.BankModelLayer.Domain.Account.Balance;
 import com.api.bank.BankModelLayer.Infrastructure.DataBaseClient;
 import com.api.bank.BankModelLayer.Infrastructure.Investment.Investment;
 
@@ -11,14 +12,12 @@ public interface Account {
     List<Transactions> getTransactions();
 
     BigDecimal getBalance();
-    void setBalance(BigDecimal value);
-
     Investment setInvestment();
 
     DataBaseClient getMetaData();
 
     Boolean hasTransaction();
 
-    void deposit(int AGENCY, int ACCOUNT_ID, BigDecimal value, Date data, String description);
+    void deposit(BigDecimal value, Date data, String description);
 
 }

@@ -3,6 +3,7 @@ package com.api.bank.BankModelLayer.Infrastructure.Transactions;
 import com.api.bank.BankModelLayer.Application.Account;
 import com.api.bank.BankModelLayer.Application.Transactions;
 import com.api.bank.BankModelLayer.Application.TypeTransactions;
+import com.api.bank.BankModelLayer.Domain.Account.Balance;
 import com.api.bank.BankModelLayer.Infrastructure.TransactionsData;
 
 import javax.xml.crypto.Data;
@@ -11,9 +12,8 @@ import java.util.Date;
 
 public class Transfer implements Transactions {
 
-
     @Override
-    public void SetData(int AGENCY, int ACCOUNT_ID, BigDecimal value, Date data, String description, TypeTransactions type) {
+    public void SetData(Balance balance, BigDecimal value, Date data, String description, TypeTransactions type) {
 
     }
 

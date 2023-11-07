@@ -1,6 +1,5 @@
 package com.api.bank.BankModelLayer.Domain.Account;
 
-import com.api.bank.BankDataLayer.MockData.SingletonController;
 import com.api.bank.BankModelLayer.Application.Account;
 import com.api.bank.BankModelLayer.Application.Transactions;
 import com.api.bank.BankModelLayer.Application.TypeTransactions;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class CurrentAccount implements Account {
 
-    private final Balance balance;
+    protected final Balance balance;
     private Login login;
 
     public CurrentAccount(Login login) {
@@ -40,11 +39,6 @@ public class CurrentAccount implements Account {
     }
 
     @Override
-    public void setBalance(BigDecimal value) {
-        balance.SetBalance(value);
-    }
-
-    @Override
     public Investment setInvestment() {
         return null;
     }
@@ -61,8 +55,8 @@ public class CurrentAccount implements Account {
     }
 
     @Override
-    public void deposit(int AGENCY, int ACCOUNT_ID, BigDecimal value, Date data, String description) {
-        new Deposit().SetData(AGENCY, ACCOUNT_ID, value, data, description, TypeTransactions.DEPOSIT);
+    public void deposit(BigDecimal value, Date data, String description) {
+        new Deposit().SetData(balance, value, data, description, TypeTransactions.DEPOSIT);
     }
 
 

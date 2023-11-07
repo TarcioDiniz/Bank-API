@@ -1,4 +1,4 @@
-package com.api.bank.BankApiLayer.helloworld;
+package com.api.bank.BankApiLayer.controllers.helloworld;
 
 
 public class HelloWorld {
