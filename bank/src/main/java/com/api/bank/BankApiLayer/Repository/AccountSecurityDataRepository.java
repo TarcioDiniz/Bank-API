@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountSecurityDataRepository extends JpaRepository<AccountSecurityData, Integer> {
-    AccountSecurityData findByCpf(int cpf); // Método para buscar por CPF
+    AccountSecurityData findByCpf(String cpf); // Método para buscar por CPF
 
-    void deleteByCpf(int cpf); // Método para excluir por CPF
+    void deleteByCpf(String cpf); // Método para excluir por CPF
 }

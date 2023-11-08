@@ -1,18 +1,25 @@
 package com.api.bank.BankApiLayer.controllers;
 
 import com.api.bank.BankApiLayer.model.BankData;
-import com.api.bank.BankApiLayer.services.BankService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.api.bank.BankApiLayer.services.BankDataService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/bank")
-public class BankController {
+public class BankDataController {
 
-    @Autowired
-    private BankService service;
+    /*
+    * @Autowired
+    * private BankService service;
+    * */
+
+    private final BankDataService service;
+
+    public BankDataController(BankDataService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public List<BankData> getAllBankData() {
@@ -20,7 +27,7 @@ public class BankController {
     }
 
     @GetMapping("/{cpf}")
-    public BankData getBankDataByCpf(@PathVariable int cpf) {
+    public BankData getBankDataByCpf(@PathVariable String cpf) {
         return service.getBankDataByCpf(cpf);
     }
 
@@ -30,12 +37,12 @@ public class BankController {
     }
 
     @PutMapping("/{cpf}")
-    public BankData updateBankData(@PathVariable int cpf, @RequestBody BankData updatedBankData) {
+    public BankData updateBankData(@PathVariable String cpf, @RequestBody BankData updatedBankData) {
         return service.updateBankData(cpf, updatedBankData);
     }
 
     @DeleteMapping("/{cpf}")
-    public void deleteBankData(@PathVariable int cpf) {
+    public void deleteBankData(@PathVariable String cpf) {
         service.deleteBankData(cpf);
     }
 }

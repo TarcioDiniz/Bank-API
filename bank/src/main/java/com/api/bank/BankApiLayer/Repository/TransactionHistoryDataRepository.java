@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransactionHistoryDataRepository extends JpaRepository<TransactionHistoryData, Integer> {
-    TransactionHistoryData findByCpf(int cpf); // Método para buscar por CPF
+    TransactionHistoryData findByCpf(String cpf); // Método para buscar por CPF
 
-    void deleteByCpf(int cpf); // Método para excluir por CPF
+    void deleteByCpf(String cpf); // Método para excluir por CPF
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonalDataRepository extends JpaRepository<PersonalData, Integer> {
-    PersonalData findByCpf(int cpf); // Método para buscar por CPF
+    PersonalData findByCpf(String cpf); // Método para buscar por CPF
 
-    void deleteByCpf(int cpf); // Método para excluir por CPF
+    void deleteByCpf(String cpf); // Método para excluir por CPF
 }

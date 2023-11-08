@@ -1,23 +1,26 @@
 package com.api.bank.BankApiLayer.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table
 public class BankData {
     @Id
     @Column(nullable = false, length = 11)
-    private int cpf;
+    private String cpf;
     @Column(nullable = false, length = 5)
     private int agency;
     @Column(nullable = false, length = 6)
     private int account_id;
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

@@ -9,7 +9,23 @@ import java.math.BigDecimal;
 public class AccountBalanceData {
     @Id
     @Column(nullable = false, length = 11)
-    private int cpf;
+    private String cpf;
     @Column(nullable = false)
     private BigDecimal balance;
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 }
