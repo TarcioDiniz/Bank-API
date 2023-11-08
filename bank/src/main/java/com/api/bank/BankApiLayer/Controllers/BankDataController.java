@@ -1,7 +1,7 @@
-package com.api.bank.BankApiLayer.controllers;
+package com.api.bank.BankApiLayer.Controllers;
 
-import com.api.bank.BankApiLayer.model.BankData;
-import com.api.bank.BankApiLayer.services.BankDataService;
+import com.api.bank.BankApiLayer.Entity.BankData;
+import com.api.bank.BankApiLayer.Services.BankDataService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

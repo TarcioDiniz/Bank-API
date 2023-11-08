@@ -1,6 +1,6 @@
 package com.api.bank.BankApiLayer.Repository;
 
-import com.api.bank.BankApiLayer.model.BankData;
+import com.api.bank.BankApiLayer.Entity.BankData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

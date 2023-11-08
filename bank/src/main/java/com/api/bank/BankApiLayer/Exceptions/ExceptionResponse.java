@@ -1,4 +1,4 @@
-package com.api.bank.BankApiLayer.exceptions;
+package com.api.bank.BankApiLayer.Exceptions;
 
 import java.io.Serial;
 import java.io.Serializable;

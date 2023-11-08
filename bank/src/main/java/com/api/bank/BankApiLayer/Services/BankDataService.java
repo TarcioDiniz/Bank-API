@@ -1,7 +1,7 @@
-package com.api.bank.BankApiLayer.services;
+package com.api.bank.BankApiLayer.Services;
 
 import com.api.bank.BankApiLayer.Repository.BankDataRepository;
-import com.api.bank.BankApiLayer.model.BankData;
+import com.api.bank.BankApiLayer.Entity.BankData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

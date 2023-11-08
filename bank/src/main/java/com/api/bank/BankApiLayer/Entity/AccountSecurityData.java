@@ -1,4 +1,4 @@
-package com.api.bank.BankApiLayer.model;
+package com.api.bank.BankApiLayer.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
