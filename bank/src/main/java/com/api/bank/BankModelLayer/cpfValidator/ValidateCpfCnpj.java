@@ -65,27 +65,20 @@ public class ValidateCpfCnpj {
             return "";
         }
 
-        String sequence = String.valueOf(sliceCpfCnpj.charAt(0)).repeat(sliceCpfCnpj.length());
-        if (sequence.equals(sliceCpfCnpj)) {
-            return "";
-        }
-
         int sum = 0;
+        int multiplier = initialMultiplier;
         for (int key = 0; key < sliceCpfCnpj.length(); key++) {
-            sum += Character.getNumericValue(sliceCpfCnpj.charAt(key)) * initialMultiplier;
+            sum += Character.getNumericValue(sliceCpfCnpj.charAt(key)) * multiplier;
 
-            if (initialMultiplier == 2) {
-                initialMultiplier = 9;
-            } else {
-                initialMultiplier -= 1;
-            }
+            multiplier--;
         }
 
         int remainder = 11 - (sum % 11);
-        remainder = (remainder <= 9) ? remainder : 0;
+        remainder = (remainder >= 10) ? 0 : remainder;
 
-        return sliceCpfCnpj + String.valueOf(remainder);
+        return sliceCpfCnpj + remainder;
     }
+
 
     public String getCpfCnpj() {
         validated = false;
