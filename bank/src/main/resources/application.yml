@@ -2,9 +2,11 @@ spring:
   datasource:
     domain: mysql.local
     port: 3306
-    databaseName: uepb_bank_api
+    databaseName: banksystem
     username: root
-    password: -Gato2002
+
+
+    password: Clarinha04
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${spring.datasource.domain}:${spring.datasource.port}/${spring.datasource.databaseName}
   jpa:
