@@ -1,6 +1,6 @@
 package com.api.bank.BankApiLayer.Services;
 
-import com.api.bank.BankApiLayer.Entity.PersonalData;
+import com.api.bank.BankApiLayer.Entity.Data.PersonalData;
 import com.api.bank.BankApiLayer.Repository.PersonalDataRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class PersonalDataService {
         if (existingPersonalData != null) {
             existingPersonalData.setDate(PersonalData.getDate());
             existingPersonalData.setEmail(PersonalData.getEmail());
-            existingPersonalData.setName(PersonalData.getName());
+            existingPersonalData.setFull_name(PersonalData.getFull_name());
             existingPersonalData.setType_account(PersonalData.getType_account());
             return repository.save(existingPersonalData);
         }

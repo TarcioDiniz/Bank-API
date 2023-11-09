@@ -1,15 +1,16 @@
-package com.api.bank.BankApiLayer.Entity;
+package com.api.bank.BankApiLayer.Entity.Data;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.sql.Timestamp;
 
 @Entity
 @Table
-public class TransactionHistoryData {
+public class TransactionHistoryData extends RepresentationModel<TransactionHistoryData> {
     @Id
     @Column(nullable = false, length = 11)
     private String cpf;

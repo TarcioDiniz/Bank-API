@@ -1,6 +1,6 @@
 package com.api.bank.BankApiLayer.Services;
 
-import com.api.bank.BankApiLayer.Entity.AccountSecurityData;
+import com.api.bank.BankApiLayer.Entity.Data.AccountSecurityData;
 import com.api.bank.BankApiLayer.Repository.AccountSecurityDataRepository;
 import org.springframework.stereotype.Service;
 

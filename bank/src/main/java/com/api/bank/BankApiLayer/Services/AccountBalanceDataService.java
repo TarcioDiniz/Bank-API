@@ -1,7 +1,7 @@
 package com.api.bank.BankApiLayer.Services;
 
 import com.api.bank.BankApiLayer.Repository.AccountBalanceDataRepository;
-import com.api.bank.BankApiLayer.Entity.AccountBalanceData;
+import com.api.bank.BankApiLayer.Entity.Data.AccountBalanceData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +30,8 @@ public class AccountBalanceDataService {
     public AccountBalanceData updateAccountBalanceData(String cpf, AccountBalanceData updatedAccountBalanceData) {
         AccountBalanceData existingAccountBalanceData = repository.findByCpf(cpf);
         if (existingAccountBalanceData != null) {
-            existingAccountBalanceData.setBalance(updatedAccountBalanceData.getBalance());
+            existingAccountBalanceData.setCurrency(updatedAccountBalanceData.getCurrency());
+            existingAccountBalanceData.setValue(updatedAccountBalanceData.getValue());
             return repository.save(existingAccountBalanceData);
         }
         return null;

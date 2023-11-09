@@ -1,7 +1,6 @@
 package com.api.bank.BankApiLayer.Services;
 
-import com.api.bank.BankApiLayer.Entity.PersonalData;
-import com.api.bank.BankApiLayer.Entity.TransactionHistoryData;
+import com.api.bank.BankApiLayer.Entity.Data.TransactionHistoryData;
 import com.api.bank.BankApiLayer.Repository.TransactionHistoryDataRepository;
 import org.springframework.stereotype.Service;
 

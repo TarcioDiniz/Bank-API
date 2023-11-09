@@ -1,21 +1,24 @@
-package com.api.bank.BankApiLayer.Entity;
+package com.api.bank.BankApiLayer.Entity.Data;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 @Table
-public class BankData {
+public class BankData extends RepresentationModel<BankData> {
     @Id
     @Column(nullable = false, length = 11)
     private String cpf;
     @Column(nullable = false, length = 5)
     private int agency;
     @Column(nullable = false, length = 6)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int account_id;
 
+    public void setCompleteBankData(String cpf, int agency) {
+        this.cpf = cpf;
+        this.agency = agency;
+    }
     public String getCpf() {
         return cpf;
     }
@@ -36,7 +39,4 @@ public class BankData {
         return account_id;
     }
 
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
-    }
 }

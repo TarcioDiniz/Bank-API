@@ -1,7 +1,9 @@
 package com.api.bank.BankApiLayer.Services;
 
 import com.api.bank.BankApiLayer.Repository.BankDataRepository;
-import com.api.bank.BankApiLayer.Entity.BankData;
+import com.api.bank.BankApiLayer.Entity.Data.BankData;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +17,18 @@ public class BankDataService {
         this.repository = repository;
     }
 
-    public List<BankData> getAllBankData() {
+    public CollectionModel<BankData> getAllBankData() {
         List<BankData> allBankData = repository.findAll();
-        for (int i = 0; i < allBankData.size(); i++) {
-            allBankData.get(i).setCpf(maskCpf(allBankData.get(i).getCpf()));
+        for (BankData bankData : allBankData) {
+            bankData.setCpf(maskCpf(bankData.getCpf()));
+
+            // Add self-link for each entity
+            Link selfLink = Link.of("/bank/" + bankData.getCpf());
+            bankData.add(selfLink);
         }
-        return allBankData;
+
+
+        return CollectionModel.of(allBankData);
     }
 
     private String maskCpf(String cpf) {
@@ -41,7 +49,6 @@ public class BankDataService {
         if (existingBankData != null) {
             // Atualize os campos do existingBankData com os valores do updatedBankData
             existingBankData.setAgency(updatedBankData.getAgency());
-            existingBankData.setAccount_id(updatedBankData.getAccount_id());
             return repository.save(existingBankData);
         }
         return null;

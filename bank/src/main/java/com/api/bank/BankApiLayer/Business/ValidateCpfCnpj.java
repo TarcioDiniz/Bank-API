@@ -1,4 +1,4 @@
-package com.api.bank.BankModelLayer.cpfValidator;
+package com.api.bank.BankApiLayer.Business;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
