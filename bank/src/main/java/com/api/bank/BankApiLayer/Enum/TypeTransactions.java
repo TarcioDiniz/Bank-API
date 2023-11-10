@@ -3,7 +3,8 @@ package com.api.bank.BankApiLayer.Enum;
 public enum TypeTransactions {
     DEPOSIT("DEPOSIT"),
     INCOME("INCOME"),
-    TRANSFER("TRANSFER"),
+    TRANSFER_ACCOUNT("TRANSFER ACCOUNT"),
+    PIX("PIX"),
     WITHDRAW("WITHDRAW");
 
     private final String value;

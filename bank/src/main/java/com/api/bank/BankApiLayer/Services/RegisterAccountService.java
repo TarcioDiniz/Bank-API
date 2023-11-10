@@ -1,6 +1,5 @@
 package com.api.bank.BankApiLayer.Services;
 
-import com.api.bank.BankApiLayer.Business.ValidateCpfCnpj;
 import com.api.bank.BankApiLayer.Entity.Data.AccountBalanceData;
 import com.api.bank.BankApiLayer.Entity.Data.AccountSecurityData;
 import com.api.bank.BankApiLayer.Entity.Data.BankData;
@@ -14,8 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-import static com.api.bank.BankApiLayer.Exception.ExceptionCPF.validateCPForCNJP;
-import static com.api.bank.BankApiLayer.Exception.ExceptionCPF.validateCPFsMatch;
+import static com.api.bank.BankApiLayer.Exception.ExceptionGenerics.validateCPForCNJP;
+import static com.api.bank.BankApiLayer.Exception.ExceptionGenerics.validateCPFsMatch;
+
 
 @Service
 public class RegisterAccountService {

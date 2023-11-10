@@ -1,4 +1,4 @@
-package com.api.bank.BankApiLayer.Entity.Model;
+package com.api.bank.BankApiLayer.Entity.Model.transaction;
 
 import java.math.BigDecimal;
 

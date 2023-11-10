@@ -9,4 +9,5 @@ public interface BankDataRepository extends JpaRepository<BankData, Integer> {
     BankData findByCpf(String cpf); // Método para buscar por CPF
 
     void deleteByCpf(String cpf); // Método para excluir por CPF
+    BankData findByAccount(int account_id);
 }

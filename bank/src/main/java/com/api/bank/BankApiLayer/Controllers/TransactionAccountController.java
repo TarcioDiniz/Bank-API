@@ -2,7 +2,9 @@ package com.api.bank.BankApiLayer.Controllers;
 
 
 import com.api.bank.BankApiLayer.Entity.Model.Balance;
-import com.api.bank.BankApiLayer.Entity.Model.Transaction;
+import com.api.bank.BankApiLayer.Entity.Model.transaction.Pix;
+import com.api.bank.BankApiLayer.Entity.Model.transaction.Transaction;
+import com.api.bank.BankApiLayer.Entity.Model.transaction.TransactionAccountID;
 import com.api.bank.BankApiLayer.Services.AccountBalanceDataService;
 import com.api.bank.BankApiLayer.Services.RegisterAccountService;
 import com.api.bank.BankApiLayer.Services.TransactionAccountService;
@@ -46,6 +48,30 @@ public class TransactionAccountController {
         try {
             transactionAccountService.withdrawAccount(transaction);
             return ResponseEntity.ok("Saque feito com sucesso");
+        } catch (RegisterAccountService.ExceptionRegister e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a solicitação");
+        }
+    }
+
+    @PostMapping("/pix")
+    public ResponseEntity<String> pixToOtherAccount(@RequestBody Pix pix) {
+        try {
+            transactionAccountService.pixToOtherAccount(pix);
+            return ResponseEntity.ok("Pix feito com sucesso");
+        } catch (RegisterAccountService.ExceptionRegister e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao processar a solicitação");
+        }
+    }
+
+    @PostMapping("/transfer-to-account")
+    public ResponseEntity<String> transactionToOtherAccount(@RequestBody TransactionAccountID transactionAccountID) {
+        try {
+            transactionAccountService.transactionToOtherAccount(transactionAccountID);
+            return ResponseEntity.ok("Transferência feita com sucesso");
         } catch (RegisterAccountService.ExceptionRegister e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {

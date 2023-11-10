@@ -23,6 +23,14 @@ public class TransactionHistoryData extends RepresentationModel<TransactionHisto
     @Column(nullable = false)
     private String type_transactions;
 
+    public void setComplete(String cpf, String value,long timestamp, String description, String type_transactions){
+        setCpf(cpf);
+        setValue(value);
+        setTimestamp(timestamp);
+        setDescription(description);
+        setType_transactions(type_transactions);
+    }
+
     public String getCpf() {
         return cpf;
     }
