@@ -1,28 +1,38 @@
 package com.api.bank.BankApiLayer.Services;
 
 import com.api.bank.BankApiLayer.Business.ValidateCpfCnpj;
+import com.api.bank.BankApiLayer.Entity.Data.AccountBalanceData;
 import com.api.bank.BankApiLayer.Entity.Data.AccountSecurityData;
 import com.api.bank.BankApiLayer.Entity.Data.BankData;
 import com.api.bank.BankApiLayer.Entity.Data.PersonalData;
+import com.api.bank.BankApiLayer.Repository.AccountBalanceDataRepository;
 import com.api.bank.BankApiLayer.Repository.AccountSecurityDataRepository;
 import com.api.bank.BankApiLayer.Repository.BankDataRepository;
 import com.api.bank.BankApiLayer.Repository.PersonalDataRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
+import static com.api.bank.BankApiLayer.Exception.ExceptionCPF.validateCPForCNJP;
+import static com.api.bank.BankApiLayer.Exception.ExceptionCPF.validateCPFsMatch;
+
 @Service
 public class RegisterAccountService {
     private final AccountSecurityDataRepository accountSecurityDataRepository;
     private final BankDataRepository bankDataRepository;
     private final PersonalDataRepository personalDataRepository;
+    private final AccountBalanceDataRepository accountBalanceDataRepository;
 
     public RegisterAccountService(
             AccountSecurityDataRepository accountSecurityDataRepository,
             BankDataRepository bankDataRepository,
-            PersonalDataRepository personalDataRepository) {
+            PersonalDataRepository personalDataRepository,
+            AccountBalanceDataRepository accountBalanceDataRepository) {
         this.accountSecurityDataRepository = accountSecurityDataRepository;
         this.bankDataRepository = bankDataRepository;
         this.personalDataRepository = personalDataRepository;
+        this.accountBalanceDataRepository = accountBalanceDataRepository;
     }
 
     @Transactional
@@ -31,26 +41,22 @@ public class RegisterAccountService {
         validateCPForCNJP(bankData.getCpf());
         haveRegistration(bankData.getCpf());
 
+        AccountBalanceData accountBalanceData = new AccountBalanceData();
+        accountBalanceData.setCpf(bankData.getCpf());
+        accountBalanceData.setCurrency("brl");
+        accountBalanceData.setValue(BigDecimal.ZERO);
+
+
         accountSecurityDataRepository.save(accountSecurityData);
         bankDataRepository.save(bankData);
         personalDataRepository.save(personalData);
+        accountBalanceDataRepository.save(accountBalanceData);
     }
 
-    private void validateCPFsMatch(String cpf1, String cpf2, String cpf3) {
-        if (!(cpf1.equals(cpf2) && cpf2.equals(cpf3))) {
-            throw new ExceptionRegister("Os CPFs não coincidem");
-        }
-    }
 
     private void haveRegistration(String cpf) {
         if (personalDataRepository.findByCpf(cpf) != null) {
             throw new ExceptionRegister("Já existe cadastro no sistema");
-        }
-    }
-
-    private void validateCPForCNJP(String cpf) {
-        if (!new ValidateCpfCnpj(cpf).validate()){
-            throw new ExceptionRegister("CPF invalido");
         }
     }
 

@@ -1,9 +1,6 @@
 package com.api.bank.BankApiLayer.Entity.Data;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.sql.Timestamp;
@@ -12,12 +9,15 @@ import java.sql.Timestamp;
 @Table
 public class TransactionHistoryData extends RepresentationModel<TransactionHistoryData> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, length = 11)
+    private Long id;
     @Column(nullable = false, length = 11)
     private String cpf;
     @Column(nullable = false)
     private String value;
     @Column(nullable = false)
-    private Timestamp timestamp;
+    private long timestamp;
     @Column(length = 500)
     private String description;
     @Column(nullable = false)
@@ -39,11 +39,11 @@ public class TransactionHistoryData extends RepresentationModel<TransactionHisto
         this.value = value;
     }
 
-    public Timestamp getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

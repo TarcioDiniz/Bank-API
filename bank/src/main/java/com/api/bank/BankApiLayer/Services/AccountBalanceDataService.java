@@ -2,6 +2,7 @@ package com.api.bank.BankApiLayer.Services;
 
 import com.api.bank.BankApiLayer.Repository.AccountBalanceDataRepository;
 import com.api.bank.BankApiLayer.Entity.Data.AccountBalanceData;
+import com.api.bank.BankApiLayer.Entity.Model.Balance;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +20,9 @@ public class AccountBalanceDataService {
         return repository.findAll();
     }
 
-    public AccountBalanceData getAccountBalanceDataByCpf(String cpf) {
-        return repository.findByCpf(cpf);
+    public Balance getAccountBalanceDataByCpf(String cpf) {
+         var balanceData = repository.findByCpf(cpf);
+         return new Balance(balanceData.getValue(), balanceData.getCurrency());
     }
 
     public AccountBalanceData createAccountBalanceData(AccountBalanceData accountBalanceData) {
