@@ -3,8 +3,8 @@ spring:
     domain: mysql.local
     port: 3306
     databaseName: uepb_bank_api
-    username: root
-    password: -Gato2002
+    username: dba
+    password: '@psw2DBA'
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${spring.datasource.domain}:${spring.datasource.port}/${spring.datasource.databaseName}
   jpa:
