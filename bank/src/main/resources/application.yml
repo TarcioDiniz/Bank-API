@@ -17,3 +17,7 @@ spring:
     redis:
       host: localhost
       port: 6379
+custom:
+  cache:
+    ttl: 60
+    redis-enabled: true
