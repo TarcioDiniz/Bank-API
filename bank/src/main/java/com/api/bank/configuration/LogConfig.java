@@ -7,7 +7,7 @@ public class LogConfig {
 
     public static void setLogFile(String fileName) {
         // Set the system property for the log file name
-        System.setProperty("logFileName", "logs/" + fileName + ".log");
+        System.setProperty("logFileName", fileName);
 
         // Get the LoggerContext from LogManager
         LoggerContext context = (LoggerContext) LogManager.getContext(false);
@@ -15,6 +15,5 @@ public class LogConfig {
         // Reconfigure the LoggerContext to apply the changes
         context.reconfigure();
     }
-
 
 }
