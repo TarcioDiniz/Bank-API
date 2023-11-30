@@ -2,14 +2,12 @@ package com.api.bank.cache.service;
 
 import com.api.bank.cache.Interface.CacheRepository;
 import com.api.bank.configuration.LogConfig;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-@Slf4j
 public class CacheService {
 
     private final CacheRepository<String, String> cacheRepository;

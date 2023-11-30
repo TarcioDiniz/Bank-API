@@ -2,7 +2,6 @@ package com.api.bank.cache.repository;
 
 import com.api.bank.cache.Interface.CacheRepository;
 import com.api.bank.configuration.LogConfig;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-@Slf4j
 public class RedisCacheRepository<K, V> implements CacheRepository<K, V> {
 
     private final Logger logger = LogManager.getLogger(CacheRepository.class);
