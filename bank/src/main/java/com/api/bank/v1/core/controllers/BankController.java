@@ -1,11 +1,12 @@
 package com.api.bank.v1.core.controllers;
 
-import com.api.bank.cache.Interface.CacheRepository;
 import com.api.bank.configuration.LogConfig;
 import com.api.bank.v1.core.data.Account;
 import com.api.bank.v1.core.entity.AccountRequest;
+import com.api.bank.v1.core.entity.AddPixKeyRequest;
 import com.api.bank.v1.core.entity.AuthenticationRequest;
 import com.api.bank.v1.core.service.AccountService;
+import com.api.bank.v1.core.service.PixKeyService;
 import com.api.bank.v1.exception.AuthenticationException;
 import com.api.bank.v1.exception.RepositoryException;
 import org.apache.logging.log4j.LogManager;
@@ -28,9 +29,12 @@ public class BankController {
     }
     private final AccountService accountService;
 
+    private final PixKeyService pixKeyService;
+
     @Autowired
-    public BankController(AccountService accountService) {
+    public BankController(AccountService accountService, PixKeyService pixKeyService) {
         this.accountService = accountService;
+        this.pixKeyService = pixKeyService;
     }
 
     @PostMapping("/authenticate")
@@ -80,4 +84,22 @@ public class BankController {
     }
 
     // Add other API endpoints for the BankController as needed for your application
+
+
+    @PostMapping("/addPixKey")
+    public ResponseEntity<?> addPixKey(@RequestBody AddPixKeyRequest request) {
+        try {
+            Long accountId = request.getAccountId();
+            String pixKey = request.getPixKey();
+
+            pixKeyService.addPixKey(accountId, pixKey);
+
+            return ResponseEntity.ok("Pix Key added successfully.");
+        } catch (RepositoryException e) {
+            logger.error("Internal server error during Pix Key addition", e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error during Pix Key addition");
+        }
+    }
 }
