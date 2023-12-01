@@ -3,12 +3,10 @@ package com.api.bank.v1.core.controllers;
 import com.api.bank.configuration.LogConfig;
 import com.api.bank.v1.core.data.Account;
 import com.api.bank.v1.core.entity.AccountRequest;
+import com.api.bank.v1.core.entity.AddDepositRequest;
 import com.api.bank.v1.core.entity.AddPixKeyRequest;
 import com.api.bank.v1.core.entity.AuthenticationRequest;
-import com.api.bank.v1.core.service.AccountBalanceService;
-import com.api.bank.v1.core.service.AccountService;
-import com.api.bank.v1.core.service.PixKeyService;
-import com.api.bank.v1.core.service.TransactionService;
+import com.api.bank.v1.core.service.*;
 import com.api.bank.v1.exception.AuthenticationException;
 import com.api.bank.v1.exception.RepositoryException;
 import org.apache.logging.log4j.LogManager;
@@ -36,12 +34,15 @@ public class BankController {
     private final AccountBalanceService accountBalanceService;
     private final TransactionService transactionService;
 
+    private final DepositService depositService;
+
     @Autowired
-    public BankController(AccountService accountService, PixKeyService pixKeyService, AccountBalanceService accountBalanceService, TransactionService transactionService) {
+    public BankController(AccountService accountService, PixKeyService pixKeyService, AccountBalanceService accountBalanceService, TransactionService transactionService, DepositService depositService) {
         this.accountService = accountService;
         this.pixKeyService = pixKeyService;
         this.accountBalanceService = accountBalanceService;
         this.transactionService = transactionService;
+        this.depositService = depositService;
     }
 
     @PostMapping("/authenticate")
@@ -147,5 +148,20 @@ public class BankController {
         }
     }*/
 
+    @PostMapping("/addDeposit")
+    public ResponseEntity<?> addDeposit(@RequestBody AddDepositRequest request) {
+        try {
+            Long accountId = request.getAccountId();
+            BigDecimal amount = request.getAmount();
 
+            depositService.addDeposit(accountId, amount);
+
+            return ResponseEntity.ok("Deposit processed successfully.");
+        } catch (RepositoryException e) {
+            logger.error("Internal server error during deposit processing", e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error during deposit processing");
+        }
+    }
 }
