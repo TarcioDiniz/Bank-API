@@ -74,7 +74,6 @@ public class AccountService {
             creditCard.setCvv("116");
 
             newAccount.setCreditCard(creditCard);
-            newAccount.setTransactions(Collections.emptyList());
             newAccount.setAccountBalance(BigDecimal.ZERO);
             newAccount.setIncome(BigDecimal.ZERO);
             newAccount.setExpenses(BigDecimal.ZERO);

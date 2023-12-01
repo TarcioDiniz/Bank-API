@@ -1,8 +1,10 @@
 package com.api.bank.v1.core.data;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,8 +49,8 @@ public class Account {
     @Embedded
     private CreditCard creditCard;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Transaction> transactions = new ArrayList<>();
 
     @Column(name = "account_balance")
     private BigDecimal accountBalance;
@@ -182,5 +184,8 @@ public class Account {
     // Getters and setters
 
     // Other constructors, methods, and nested classes
+    public void addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.api.bank.v1.core.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -12,8 +14,10 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Transaction class
     @ManyToOne
     @JoinColumn(name = "account_id")
+    @JsonBackReference
     private Account account;
 
     @Column(name = "transaction_name")
@@ -22,8 +26,10 @@ public class Transaction {
     @Column(name = "transaction_category")
     private String transactionCategory;
 
+    @JsonProperty("transactionValue")
     @Column(name = "transaction_value")
     private BigDecimal transactionValue;
+
 
     public Long getId() {
         return id;
