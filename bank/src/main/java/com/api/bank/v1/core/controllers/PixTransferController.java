@@ -34,8 +34,8 @@ public class PixTransferController {
         try {
 
             pixTransferService.addPixTransferToAccount(request);
-
             return ResponseEntity.ok("PIX Transfer processed successfully.");
+            
         } catch (RepositoryException e) {
             logger.error("Internal server error during PIX Transfer processing", e);
             return ResponseEntity
