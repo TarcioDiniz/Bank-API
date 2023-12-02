@@ -2,6 +2,8 @@ package com.api.bank.v1.core.controllers;
 
 import com.api.bank.v1.core.entity.PixTransferRequest;
 import com.api.bank.v1.core.service.PixTransferService;
+import com.api.bank.v1.exception.AccountNotFoundException;
+import com.api.bank.v1.exception.InsufficientBalanceException;
 import com.api.bank.v1.exception.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +37,8 @@ public class PixTransferController {
 
             pixTransferService.addPixTransferToAccount(request);
             return ResponseEntity.ok("PIX Transfer processed successfully.");
-            
-        } catch (RepositoryException e) {
+
+        } catch (InsufficientBalanceException | AccountNotFoundException | RepositoryException e) {
             logger.error("Internal server error during PIX Transfer processing", e);
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)

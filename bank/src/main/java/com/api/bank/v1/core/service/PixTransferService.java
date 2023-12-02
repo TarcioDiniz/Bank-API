@@ -6,6 +6,8 @@ import com.api.bank.v1.core.data.Account;
 import com.api.bank.v1.core.data.Transaction;
 import com.api.bank.v1.core.entity.PixTransferRequest;
 import com.api.bank.v1.core.repository.AccountRepository;
+import com.api.bank.v1.exception.AccountNotFoundException;
+import com.api.bank.v1.exception.InsufficientBalanceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +37,11 @@ public class PixTransferService {
     }
 
     public void addPixTransferToAccount(PixTransferRequest pixTransfer) {
-        try {
-            Optional<Account> optionalAccount1 = accountRepository.findById(pixTransfer.getAccountId());
-            Optional<Account> optionalAccount2 = accountRepository.findByPixKeys(pixTransfer.getPixKey());
 
+        Optional<Account> optionalAccount1 = accountRepository.findById(pixTransfer.getAccountId());
+        Optional<Account> optionalAccount2 = accountRepository.findByPixKeys(pixTransfer.getPixKey());
+
+        if (pixTransfer.getTransferAmount().compareTo(BigDecimal.ZERO) > 0){
             if (optionalAccount1.isPresent() && optionalAccount2.isPresent()) {
                 Account account1 = optionalAccount1.get();
                 Account account2 = optionalAccount2.get();
@@ -52,13 +55,17 @@ public class PixTransferService {
                     logger.info("Pix transfer completed successfully.");
                 } else {
                     logger.error("Insufficient balance for Pix transfer. Pix transfer failed.");
+                    throw new InsufficientBalanceException("Insufficient balance for Pix transfer");
                 }
             } else {
                 logger.error("One or both accounts not found. Pix transfer failed.");
+                throw new AccountNotFoundException("One or both accounts not found. Pix transfer failed.");
             }
-        } catch (Exception e) {
-            logger.error("An error occurred during Pix transfer: {}", e.getMessage(), e);
+        }else {
+            logger.error("Value " + pixTransfer.getTransferAmount() + " is negative.");
+            throw new AccountNotFoundException("Value " + pixTransfer.getTransferAmount() + " is negative.");
         }
+
     }
 
     private void performPixTransfer(Account account1, Account account2, BigDecimal transferAmount, String transactionName) {
