@@ -1,6 +1,6 @@
 package com.api.bank.v1.core.data;
 
-import com.api.bank.v1.core.service.PixTransfer;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -50,7 +50,7 @@ public class Account {
     private CreditCard creditCard;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<PixTransfer> transactions = new ArrayList<PixTransfer>();
+    private List<Transaction> transactions = new ArrayList<>();
 
     @Column(name = "account_balance")
     private BigDecimal accountBalance;
@@ -133,11 +133,11 @@ public class Account {
         this.quickTransferFriends = quickTransferFriends;
     }
 
-    public List<PixTransfer> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<PixTransfer> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
@@ -184,7 +184,7 @@ public class Account {
     // Getters and setters
 
     // Other constructors, methods, and nested classes
-    public void addTransaction(PixTransfer transaction) {
+    public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
     }
 

@@ -2,6 +2,7 @@ package com.api.bank.v1.core.service;
 
 import com.api.bank.configuration.LogConfig;
 import com.api.bank.v1.core.data.Account;
+import com.api.bank.v1.core.data.Transaction;
 import com.api.bank.v1.core.repository.AccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class TransactionService {
         this.accountRepository = accountRepository;
     }
 
-    public void addTransactionToAccount(Long accountId, PixTransfer newTransaction) {
+    public void addTransactionToAccount(Long accountId, Transaction newTransaction) {
         logger.info("Adding transaction to account with ID: {}", accountId);
 
         Optional<Account> optionalAccount = accountRepository.findById(accountId);

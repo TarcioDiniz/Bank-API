@@ -35,8 +35,8 @@ public class PixKeyService {
             if (optionalAccount.isPresent()) {
                 Account account = optionalAccount.get();
 
-                // Verificar se a chave PIX já existe
-                if (account.getPixKeys().contains(pixKey)) {
+                // Verificar se a chave PIX já existe (case-insensitive check)
+                if (account.getPixKeys().stream().anyMatch(existingPixKey -> existingPixKey.equalsIgnoreCase(pixKey))) {
                     logger.warn("Pix Key {} already exists.", pixKey);
                     throw new RepositoryException("Pix Key already exists.");
                 }
@@ -58,4 +58,5 @@ public class PixKeyService {
             throw new RepositoryException("Error adding Pix Key.", e);
         }
     }
+
 }

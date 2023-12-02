@@ -1,21 +1,18 @@
 package com.api.bank.v1.core.service;
 
 import com.api.bank.configuration.LogConfig;
+import com.api.bank.v1.core.Enum.TransactionCategory;
 import com.api.bank.v1.core.data.Account;
+import com.api.bank.v1.core.data.Transaction;
+import com.api.bank.v1.core.entity.PixTransferRequest;
 import com.api.bank.v1.core.repository.AccountRepository;
-import com.api.bank.v1.core.repository.TransactionRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.api.bank.v1.core.service.PixTransfer;
-
-
-
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Service
 public class PixTransferService {
@@ -28,46 +25,68 @@ public class PixTransferService {
 
     private final TransactionService transactionService;
     private final AccountRepository accountRepository;
-    private final TransactionRepository transactionRepository;
+    private final AccountBalanceService accountBalanceService;
 
     @Autowired
-    public PixTransferService(TransactionService transactionService, AccountRepository accountRepository, TransactionRepository transactionRepository) {
+    public PixTransferService(TransactionService transactionService, AccountRepository accountRepository, AccountBalanceService accountBalanceService) {
         this.transactionService = transactionService;
         this.accountRepository = accountRepository;
-        this.transactionRepository = transactionRepository;
+        this.accountBalanceService = accountBalanceService;
     }
 
-    @Transactional
-    public void addPixTransferToAccount(Long accountId, String recipientName, String recipientAccountNumber, BigDecimal transferAmount) {
-        logger.info("Adding PIX transfer to account with ID: {}", accountId);
+    public void addPixTransferToAccount(PixTransferRequest pixTransfer) {
+        try {
+            Optional<Account> optionalAccount1 = accountRepository.findById(pixTransfer.getAccountId());
+            Optional<Account> optionalAccount2 = accountRepository.findByPixKeys(pixTransfer.getPixKey());
 
-        // Validar a transferência PIX, se necessário
+            if (optionalAccount1.isPresent() && optionalAccount2.isPresent()) {
+                Account account1 = optionalAccount1.get();
+                Account account2 = optionalAccount2.get();
 
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> {
-                    logger.error("Conta com ID {} não encontrada. Lançando EntityNotFoundException.", accountId);
-                    return new EntityNotFoundException("Conta com ID " + accountId + " não encontrada.");
-                });
+                BigDecimal transferAmount = pixTransfer.getTransferAmount();
+                BigDecimal account1Balance = accountBalanceService.getAccountBalance(account1.getId());
 
-        // Criar uma nova instância de PixTransfer
-        PixTransfer pixTransfer = new PixTransfer();
-        pixTransfer.setRecipientName(recipientName);
-        pixTransfer.setRecipientAccountNumber(recipientAccountNumber);
-        pixTransfer.setTransferAmount(transferAmount);
+                if (account1Balance.compareTo(transferAmount) >= 0) {
+                    // Perform the transfer
+                    performPixTransfer(account1, account2, transferAmount, pixTransfer.getTransactionName());
+                    logger.info("Pix transfer completed successfully.");
+                } else {
+                    logger.error("Insufficient balance for Pix transfer. Pix transfer failed.");
+                }
+            } else {
+                logger.error("One or both accounts not found. Pix transfer failed.");
+            }
+        } catch (Exception e) {
+            logger.error("An error occurred during Pix transfer: {}", e.getMessage(), e);
+        }
+    }
 
-        // Certifique-se de que a transferência PIX tenha uma referência válida para a conta
-        pixTransfer.setAccount(account);
+    private void performPixTransfer(Account account1, Account account2, BigDecimal transferAmount, String transactionName) {
+        // Deduct amount from account1
+        account1.setAccountBalance(account1.getAccountBalance().subtract(transferAmount));
 
-        // Atualizar o saldo da conta com o valor da transferência PIX
-        BigDecimal newBalance = account.getAccountBalance().subtract(transferAmount);
-        account.setAccountBalance(newBalance);
+        // Add amount to account2
+        account2.setAccountBalance(account2.getAccountBalance().add(transferAmount));
 
-        // Salvar a conta atualizada
-        accountRepository.save(account);
+        // Create transactions
+        Transaction transaction1 = createTransaction(account1, transferAmount.negate(), transactionName);
+        Transaction transaction2 = createTransaction(account2, transferAmount, transactionName);
 
-        // Adicionar a transferência PIX como uma transação
-        transactionService.addTransactionToAccount(accountId, pixTransfer);
+        // Add transactions to accounts
+        transactionService.addTransactionToAccount(account1.getId(), transaction1);
+        transactionService.addTransactionToAccount(account2.getId(), transaction2);
 
-        logger.info("PIX transfer added successfully to account with ID: {}", accountId);
+        // Save accounts
+        accountRepository.save(account1);
+        accountRepository.save(account2);
+    }
+
+    private Transaction createTransaction(Account account, BigDecimal amount, String transactionName) {
+        Transaction transaction = new Transaction();
+        transaction.setAccount(account);
+        transaction.setTransactionName(transactionName);
+        transaction.setTransactionCategory(TransactionCategory.Pix.toString());
+        transaction.setTransactionValue(amount);
+        return transaction;
     }
 }

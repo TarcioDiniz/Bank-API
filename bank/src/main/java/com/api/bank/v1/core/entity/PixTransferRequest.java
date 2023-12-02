@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class PixTransferRequest {
 
     private Long accountId;
-    private String recipientName;
-    private String recipientAccountNumber;
+    private String transactionName;
+    private String pixKey;
     private BigDecimal transferAmount;
 
     // Getters and setters
@@ -19,20 +19,13 @@ public class PixTransferRequest {
         this.accountId = accountId;
     }
 
-    public String getRecipientName() {
-        return recipientName;
+
+    public String getPixKey() {
+        return pixKey;
     }
 
-    public void setRecipientName(String recipientName) {
-        this.recipientName = recipientName;
-    }
-
-    public String getRecipientAccountNumber() {
-        return recipientAccountNumber;
-    }
-
-    public void setRecipientAccountNumber(String recipientAccountNumber) {
-        this.recipientAccountNumber = recipientAccountNumber;
+    public void setPixKey(String pixKey) {
+        this.pixKey = pixKey;
     }
 
     public BigDecimal getTransferAmount() {
@@ -42,4 +35,13 @@ public class PixTransferRequest {
     public void setTransferAmount(BigDecimal transferAmount) {
         this.transferAmount = transferAmount;
     }
+
+    public String getTransactionName() {
+        return transactionName;
+    }
+
+    public void setTransactionName(String transactionName) {
+        this.transactionName = transactionName;
+    }
+
 }

@@ -8,14 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import org.springframework.transaction.annotation.Transactional;
-import com.api.bank.v1.core.service.PixTransfer;
 
 
 import java.math.BigDecimal;
@@ -36,12 +32,8 @@ public class PixTransferController {
     @PostMapping("/transfer")
     public ResponseEntity<?> transferPix(@RequestBody PixTransferRequest request) {
         try {
-            Long accountId = request.getAccountId();
-            String recipientName = request.getRecipientName();
-            String recipientAccountNumber = request.getRecipientAccountNumber();
-            BigDecimal transferAmount = request.getTransferAmount();
 
-            pixTransferService.addPixTransferToAccount(accountId, recipientName, recipientAccountNumber, transferAmount);
+            pixTransferService.addPixTransferToAccount(request);
 
             return ResponseEntity.ok("PIX Transfer processed successfully.");
         } catch (RepositoryException e) {
