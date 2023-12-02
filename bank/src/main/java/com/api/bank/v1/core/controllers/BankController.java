@@ -2,10 +2,7 @@ package com.api.bank.v1.core.controllers;
 
 import com.api.bank.configuration.LogConfig;
 import com.api.bank.v1.core.data.Account;
-import com.api.bank.v1.core.entity.AccountRequest;
-import com.api.bank.v1.core.entity.AddDepositRequest;
-import com.api.bank.v1.core.entity.AddPixKeyRequest;
-import com.api.bank.v1.core.entity.AuthenticationRequest;
+import com.api.bank.v1.core.entity.*;
 import com.api.bank.v1.core.service.*;
 import com.api.bank.v1.exception.AuthenticationException;
 import com.api.bank.v1.exception.RepositoryException;
@@ -43,6 +40,7 @@ public class BankController {
         this.accountBalanceService = accountBalanceService;
         this.transactionService = transactionService;
         this.depositService = depositService;
+
     }
 
     @PostMapping("/authenticate")
@@ -164,4 +162,5 @@ public class BankController {
                     .body("Internal server error during deposit processing");
         }
     }
+
 }
