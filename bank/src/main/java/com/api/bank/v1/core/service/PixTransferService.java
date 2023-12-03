@@ -41,7 +41,7 @@ public class PixTransferService {
         Optional<Account> optionalAccount1 = accountRepository.findById(pixTransfer.getAccountId());
         Optional<Account> optionalAccount2 = accountRepository.findByPixKeys(pixTransfer.getPixKey());
 
-        if (pixTransfer.getTransferAmount().compareTo(BigDecimal.ZERO) > 0){
+        if (pixTransfer.getTransferAmount().compareTo(BigDecimal.ZERO) > 0) {
             if (optionalAccount1.isPresent() && optionalAccount2.isPresent()) {
                 Account account1 = optionalAccount1.get();
                 Account account2 = optionalAccount2.get();
@@ -61,7 +61,7 @@ public class PixTransferService {
                 logger.error("One or both accounts not found. Pix transfer failed.");
                 throw new AccountNotFoundException("One or both accounts not found. Pix transfer failed.");
             }
-        }else {
+        } else {
             logger.error("Value " + pixTransfer.getTransferAmount() + " is negative.");
             throw new AccountNotFoundException("Value " + pixTransfer.getTransferAmount() + " is negative.");
         }
@@ -76,8 +76,8 @@ public class PixTransferService {
         account2.setAccountBalance(account2.getAccountBalance().add(transferAmount));
 
         // Create transactions
-        Transaction transaction1 = createTransaction(account1, transferAmount.negate(), transactionName);
-        Transaction transaction2 = createTransaction(account2, transferAmount, transactionName);
+        Transaction transaction1 = createTransaction(account1, transferAmount.negate(), transactionName + " to " + account2.getFullName());
+        Transaction transaction2 = createTransaction(account2, transferAmount, "You received a pix from " + account1.getFullName());
 
         // Add transactions to accounts
         transactionService.addTransactionToAccount(account1.getId(), transaction1);

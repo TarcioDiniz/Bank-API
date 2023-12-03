@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TransactionService {
@@ -134,7 +131,7 @@ public class TransactionService {
 
                 transactionRequestList.add(transactionRequest);
             });
-
+            Collections.reverse(transactionRequestList);
             return transactionRequestList;
 
         }
