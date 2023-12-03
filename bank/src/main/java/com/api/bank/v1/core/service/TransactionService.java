@@ -3,6 +3,7 @@ package com.api.bank.v1.core.service;
 import com.api.bank.configuration.LogConfig;
 import com.api.bank.v1.core.data.Account;
 import com.api.bank.v1.core.data.Transaction;
+import com.api.bank.v1.core.entity.TransactionRequest;
 import com.api.bank.v1.core.repository.AccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -115,7 +117,30 @@ public class TransactionService {
         return pdfBytes;
     }
 
+    public List<TransactionRequest> getTransaction(Long accountId) {
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
 
+        List<TransactionRequest> transactionRequestList = new ArrayList<>();
+
+        if (optionalAccount.isPresent()) {
+            Account account = optionalAccount.get();
+
+
+            account.getTransactions().forEach(transaction -> {
+                TransactionRequest transactionRequest = new TransactionRequest();
+                transactionRequest.setTransactionName(transaction.getTransactionName());
+                transactionRequest.setTransactionCategory(transaction.getTransactionCategory());
+                transactionRequest.setTransactionValue(transaction.getTransactionValue().toString());
+
+                transactionRequestList.add(transactionRequest);
+            });
+
+            return transactionRequestList;
+
+        }
+
+        return transactionRequestList;
+    }
 
 
 }

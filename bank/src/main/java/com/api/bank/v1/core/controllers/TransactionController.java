@@ -1,6 +1,7 @@
 package com.api.bank.v1.core.controllers;
 
 import com.api.bank.v1.core.data.Account;
+import com.api.bank.v1.core.entity.TransactionRequest;
 import com.api.bank.v1.core.repository.AccountRepository;
 import com.api.bank.v1.core.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,6 +38,13 @@ public class TransactionController {
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
         return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+
+    }
+
+
+    @GetMapping("/{accountId}")
+    public List<TransactionRequest> generateTransactionList(@PathVariable Long accountId) {
+        return transactionService.getTransaction(accountId);
 
     }
 
