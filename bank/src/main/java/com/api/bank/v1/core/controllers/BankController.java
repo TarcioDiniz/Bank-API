@@ -110,15 +110,14 @@ public class BankController {
     }
 
     @GetMapping("/getAccountBalance/{accountId}")
-    public ResponseEntity<?> getAccountBalance(@PathVariable Long accountId) {
+    public BalanceRequest getAccountBalance(@PathVariable Long accountId) {
         try {
-            BigDecimal balance = accountBalanceService.getAccountBalance(accountId);
-            return ResponseEntity.ok(balance);
+            BalanceRequest balanceRequest = new BalanceRequest();
+            balanceRequest.setAmount(accountBalanceService.getAccountBalance(accountId).toString());
+            return balanceRequest;
         } catch (RepositoryException e) {
             logger.error("Internal server error during get account balance", e);
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Internal server error during get account balance");
+            return new BalanceRequest();
         }
     }
 
