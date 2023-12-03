@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,34 @@ public class PixKeyService {
             logger.error("Error adding Pix Key to account with ID {}.", accountId, e);
             throw new RepositoryException("Error adding Pix Key.", e);
         }
+    }
+
+    public List<String> getPixKeyAccount(Long accountId){
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+        List<String> keysString = new ArrayList<>();
+
+        if (optionalAccount.isPresent()) {
+            Account account = optionalAccount.get();
+
+            keysString.addAll(account.getPixKeys());
+            return keysString;
+        }
+        return keysString;
+    }
+
+    public void deletePixKeyAccount(Long accountId, String pixKey){
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+        List<String> keysString = new ArrayList<>();
+
+        if (optionalAccount.isPresent()) {
+            Account account = optionalAccount.get();
+
+            account.getPixKeys().remove(pixKey);
+
+            accountRepository.save(account);
+
+        }
+        throw new RepositoryException("Pix not found.");
     }
 
 }

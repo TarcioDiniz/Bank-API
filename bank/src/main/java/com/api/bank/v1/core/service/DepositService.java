@@ -1,6 +1,8 @@
 package com.api.bank.v1.core.service;
 
+import com.api.bank.v1.core.Enum.TransactionCategory;
 import com.api.bank.v1.core.data.Account;
+import com.api.bank.v1.core.data.Transaction;
 import com.api.bank.v1.core.repository.AccountRepository;
 import com.api.bank.v1.exception.RepositoryException;
 import org.slf4j.Logger;
@@ -16,14 +18,17 @@ public class DepositService {
 
     private static final Logger logger = LoggerFactory.getLogger(DepositService.class);
 
+
     private final AccountRepository accountRepository;
+    private final TransactionService transactionService;
 
     @Autowired
-    public DepositService(AccountRepository accountRepository) {
+    public DepositService(AccountRepository accountRepository, TransactionService transactionService) {
         this.accountRepository = accountRepository;
+        this.transactionService = transactionService;
     }
 
-    public void addDeposit(Long accountId, BigDecimal amount) {
+    public void addDeposit(Long accountId, String description , BigDecimal amount) {
         try {
             Optional<Account> optionalAccount = accountRepository.findById(accountId);
 
@@ -34,6 +39,11 @@ public class DepositService {
                 BigDecimal currentBalance = account.getAccountBalance();
                 BigDecimal newBalance = currentBalance.add(amount);
                 account.setAccountBalance(newBalance);
+
+                Transaction transaction1 = createTransaction(account, amount, description);
+
+                // Add transactions to accounts
+                transactionService.addTransactionToAccount(account.getId(), transaction1);
 
                 // Salvar a conta atualizada
                 accountRepository.save(account);
@@ -47,5 +57,14 @@ public class DepositService {
             logger.error("Error adding deposit to account with ID {}.", accountId, e);
             throw new RepositoryException("Error adding deposit.", e);
         }
+    }
+
+    private Transaction createTransaction(Account account, BigDecimal amount, String transactionName) {
+        Transaction transaction = new Transaction();
+        transaction.setAccount(account);
+        transaction.setTransactionName(transactionName);
+        transaction.setTransactionCategory(TransactionCategory.Deposit.toString());
+        transaction.setTransactionValue(amount);
+        return transaction;
     }
 }

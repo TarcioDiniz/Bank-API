@@ -68,7 +68,7 @@ public class AccountService {
             newAccount.setQuickTransferFriends(Collections.emptyList());
 
             CreditCard creditCard = new CreditCard();
-            creditCard.setCardNumber("5144 5650 4313 9946");
+            creditCard.setCardNumber("5144565043139946");
             creditCard.setCreditLimit(new BigDecimal("100"));
             creditCard.setExpirationDate("29/05/2025");
             creditCard.setCvv("116");

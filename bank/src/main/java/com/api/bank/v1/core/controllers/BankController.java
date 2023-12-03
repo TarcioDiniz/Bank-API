@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -109,6 +111,33 @@ public class BankController {
         }
     }
 
+    @GetMapping("/pix/{accountId}")
+    public List<String> getPixKeyAccount(@PathVariable Long accountId) {
+        try {
+            return pixKeyService.getPixKeyAccount(accountId);
+        } catch (RepositoryException e) {
+            logger.error("Internal server error during get account balance", e);
+            return new ArrayList<String>();
+        }
+    }
+
+    @DeleteMapping("/deletePixKey")
+    public ResponseEntity<?> deletePixKey(@RequestBody AddPixKeyRequest request) {
+        try {
+            Long accountId = request.getAccountId();
+            String pixKey = request.getPixKey();
+
+            pixKeyService.deletePixKeyAccount(accountId, pixKey);
+
+            return ResponseEntity.ok("Pix Key added successfully.");
+        } catch (RepositoryException e) {
+            logger.error("Internal server error during Pix Key addition", e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error during Pix Key addition");
+        }
+    }
+
     @GetMapping("/getAccountBalance/{accountId}")
     public BalanceRequest getAccountBalance(@PathVariable Long accountId) {
         try {
@@ -150,8 +179,9 @@ public class BankController {
         try {
             Long accountId = request.getAccountId();
             BigDecimal amount = request.getAmount();
+            String description = request.getDescription();
 
-            depositService.addDeposit(accountId, amount);
+            depositService.addDeposit(accountId, description, amount);
 
             return ResponseEntity.ok("Deposit processed successfully.");
         } catch (RepositoryException e) {
